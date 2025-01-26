@@ -33,11 +33,31 @@ select name from pet where owner LIKE '____';
 select owner from pet where owner GLOB '[A-Ea-e]*[A-Ea-e]';
 
 -- Q2-6. Repeat the previous query, but make the query sensitive to the case of letters of the alphabet the characters in the name
+select owner from pet where owner GLOB '[a-e]*[a-e]';
+select owner from pet where owner GLOB '[A-E]*[A-E]';
+select owner from pet where owner GLOB '[A-E]*[a-e]';
+select owner from pet where owner GLOB '[a-e]*[A-E]';
 
 -- Q3-1. The average number of check-ups that each owner has made with their pets 
+select owner, AVG(checkups) AS average_checkups FROM pet group by owner;
+
 -- Q3-2. The number of pets of each species in ascending order
+select owner, species, COUNT(name) as number_of_pets from pet group by species;
+
 -- Q3-3. The number of pets of each species that each owner has
+select owner, species, COUNT(name) as number_of_pets from pet group by species;
+
 -- Q3-4. The number of distinct species of pet each owner has
+select distinct owner, count(species) as number_of_species 
+from pet group by owner;
+
 -- Q3-5. The number of pets of each gender there are in the database, where the gender is known 
+select sex, COUNT(sex) as number_of_pets from pet 
+where sex = 'm' or sex = 'f' group by sex;
+
 -- Q3-6. The number of birds each owner has
+select owner, COUNT(species) AS number_of_birds FROM pet 
+where species = 'bird' group by owner;
+
 -- Q3-7. The total number of check-ups each owner has made with all their pets
+select owner, SUM(checkups) AS total_checkups FROM pet group by owner;
